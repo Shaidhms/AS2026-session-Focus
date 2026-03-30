@@ -1,0 +1,1603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Master Your 168 Hours | Focus Workshop</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+:root {
+  --bg-dark: #0a0a0a;
+  --bg-section: #111111;
+  --bg-card: #1a1a1a;
+  --amber: #f5a623;
+  --amber-glow: rgba(245, 166, 35, 0.15);
+  --teal: #0d9488;
+  --teal-glow: rgba(13, 148, 136, 0.15);
+  --white: #f0f0f0;
+  --gray: #888888;
+  --red: #ef4444;
+  --green: #22c55e;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: var(--amber) var(--bg-dark);
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg-dark);
+  color: var(--white);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* Progress Bar */
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--amber), var(--teal));
+  z-index: 9999;
+  width: 0%;
+  transition: none;
+}
+
+/* Grain overlay */
+.grain {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 9998;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 128px 128px;
+}
+
+/* Section base */
+section {
+  position: relative;
+  padding: 120px 5vw;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.section-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--amber);
+  margin-bottom: 24px;
+  font-weight: 500;
+}
+
+h1, h2, h3 {
+  font-family: 'Bebas Neue', sans-serif;
+  line-height: 0.95;
+  letter-spacing: 0.02em;
+}
+
+/* ===== HERO ===== */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: radial-gradient(ellipse at 50% 80%, rgba(245,166,35,0.08) 0%, transparent 60%);
+  position: relative;
+}
+
+.hero-pre {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  color: var(--gray);
+  margin-bottom: 20px;
+}
+
+.hero h1 {
+  font-size: clamp(3.5rem, 12vw, 10rem);
+  color: var(--white);
+  margin-bottom: 8px;
+}
+
+.hero h1 span {
+  color: var(--amber);
+  display: block;
+}
+
+.hero-counter {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin: 40px 0 20px;
+}
+
+.hero-counter .number {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(5rem, 15vw, 12rem);
+  color: var(--amber);
+  line-height: 1;
+  text-shadow: 0 0 60px rgba(245,166,35,0.3);
+}
+
+.hero-counter .label {
+  font-size: 1rem;
+  color: var(--gray);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  max-width: 120px;
+  text-align: left;
+  line-height: 1.3;
+}
+
+.hero-subtitle {
+  font-size: clamp(1rem, 2.5vw, 1.4rem);
+  color: var(--gray);
+  margin-top: 10px;
+  font-weight: 300;
+  max-width: 500px;
+}
+
+.hero-scroll {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: var(--gray);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  animation: pulse-down 2s infinite;
+}
+
+.hero-scroll .line {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, var(--amber), transparent);
+}
+
+@keyframes pulse-down {
+  0%, 100% { opacity: 0.5; transform: translateX(-50%) translateY(0); }
+  50% { opacity: 1; transform: translateX(-50%) translateY(6px); }
+}
+
+/* ===== MARQUEE ===== */
+.marquee-section {
+  padding: 30px 0;
+  overflow: hidden;
+  min-height: auto;
+  background: var(--bg-section);
+  border-top: 1px solid rgba(255,255,255,0.05);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.marquee-track {
+  display: flex;
+  white-space: nowrap;
+  gap: 60px;
+  animation: scroll-left 20s linear infinite;
+}
+
+.marquee-track span {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3rem, 10vw, 8rem);
+  color: rgba(255,255,255,0.04);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  flex-shrink: 0;
+}
+
+.marquee-track span.highlight {
+  color: rgba(245,166,35,0.12);
+}
+
+@keyframes scroll-left {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ===== PROBLEM SECTION ===== */
+.problem {
+  background: var(--bg-dark);
+}
+
+.problem h2 {
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  margin-bottom: 60px;
+}
+
+.problem h2 span { color: var(--red); }
+
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 40px;
+  margin-bottom: 60px;
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-number {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3rem, 6vw, 5rem);
+  color: var(--amber);
+  line-height: 1;
+}
+
+.stat-suffix {
+  font-size: 0.5em;
+  color: var(--gray);
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  color: var(--gray);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-top: 8px;
+}
+
+/* Interrupt timeline */
+.interrupt-viz {
+  max-width: 800px;
+  margin: 40px auto 0;
+  position: relative;
+}
+
+.interrupt-bar {
+  display: flex;
+  align-items: center;
+  height: 60px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--bg-card);
+  margin-bottom: 12px;
+}
+
+.interrupt-bar .segment {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  color: rgba(255,255,255,0.7);
+}
+
+.segment.focus { background: var(--teal); }
+.segment.interrupt { background: var(--red); }
+.segment.recovery { background: rgba(245,166,35,0.4); }
+.segment.flow { background: var(--amber); }
+
+.interrupt-labels {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.interrupt-labels span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  color: var(--gray);
+}
+
+.interrupt-labels .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+}
+
+.quote-block {
+  margin-top: 50px;
+  padding: 30px 40px;
+  border-left: 3px solid var(--amber);
+  max-width: 600px;
+}
+
+.quote-block p {
+  font-size: 1.3rem;
+  font-style: italic;
+  font-weight: 300;
+  color: var(--white);
+  line-height: 1.6;
+}
+
+.quote-block .author {
+  font-size: 0.8rem;
+  color: var(--gray);
+  margin-top: 12px;
+  font-style: normal;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* ===== BUSY != PRODUCTIVE ===== */
+.busy-section {
+  background: var(--bg-section);
+  text-align: center;
+  min-height: 80vh;
+}
+
+.busy-equation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  margin: 40px 0;
+}
+
+.busy-equation .word {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3rem, 8vw, 7rem);
+  color: var(--white);
+}
+
+.busy-equation .not-equal {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(4rem, 10vw, 9rem);
+  color: var(--red);
+  text-shadow: 0 0 40px rgba(239,68,68,0.3);
+}
+
+.busy-explain {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  max-width: 700px;
+  margin: 50px auto 0;
+  text-align: left;
+}
+
+.busy-explain .col h3 {
+  font-size: 1.8rem;
+  margin-bottom: 12px;
+}
+
+.busy-explain .col.bad h3 { color: var(--red); }
+.busy-explain .col.good h3 { color: var(--green); }
+
+.busy-explain .col p {
+  color: var(--gray);
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+/* ===== RPA FRAMEWORK ===== */
+.rpa-section {
+  background: var(--bg-dark);
+}
+
+.rpa-section h2 {
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  margin-bottom: 16px;
+}
+
+.rpa-section h2 span { color: var(--amber); }
+
+.rpa-subtitle {
+  font-size: 1.1rem;
+  color: var(--gray);
+  margin-bottom: 60px;
+  max-width: 600px;
+}
+
+.rpa-comparison {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  max-width: 700px;
+  margin-bottom: 60px;
+  flex-wrap: wrap;
+}
+
+.rpa-vs {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.rpa-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 5rem;
+  line-height: 1;
+}
+
+.rpa-num.old { color: var(--gray); text-decoration: line-through; }
+.rpa-num.new { color: var(--amber); }
+
+.rpa-arrow {
+  font-size: 2rem;
+  color: var(--amber);
+}
+
+.rpa-desc {
+  font-size: 0.85rem;
+  color: var(--gray);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* SRE Pillars */
+.sre-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  max-width: 800px;
+  margin-top: 40px;
+}
+
+.sre-item {
+  padding: 40px 30px;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 8px;
+  text-align: center;
+  transition: border-color 0.3s;
+  background: var(--bg-card);
+}
+
+.sre-item:hover {
+  border-color: var(--amber);
+}
+
+.sre-icon {
+  font-size: 2.5rem;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.sre-item h3 {
+  font-size: 1.8rem;
+  margin-bottom: 8px;
+  color: var(--amber);
+}
+
+.sre-item p {
+  font-size: 0.85rem;
+  color: var(--gray);
+  line-height: 1.6;
+}
+
+/* ===== SLEEP ===== */
+.sleep-section {
+  background: linear-gradient(180deg, var(--bg-section) 0%, #0a0f1a 100%);
+}
+
+.sleep-section h2 {
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  margin-bottom: 16px;
+  text-align: right;
+}
+
+.sleep-section h2 span { color: var(--teal); }
+
+.sleep-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  margin-top: 40px;
+}
+
+.sleep-priority {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.priority-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  border-radius: 6px;
+  background: rgba(255,255,255,0.03);
+  transition: all 0.3s;
+}
+
+.priority-item.top {
+  background: var(--teal-glow);
+  border: 1px solid rgba(13,148,136,0.3);
+}
+
+.priority-rank {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.5rem;
+  color: var(--gray);
+  width: 30px;
+}
+
+.priority-item.top .priority-rank { color: var(--teal); }
+
+.priority-name {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.priority-item.top .priority-name { color: var(--teal); }
+
+.sleep-metrics {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.metric-card {
+  padding: 24px;
+  background: var(--bg-card);
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.metric-card h4 {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--gray);
+  margin-bottom: 8px;
+}
+
+.metric-bar-container {
+  width: 100%;
+  height: 6px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 3px;
+  margin-top: 12px;
+  overflow: hidden;
+}
+
+.metric-bar {
+  height: 100%;
+  border-radius: 3px;
+  width: 0%;
+  transition: width 1.5s ease;
+}
+
+.metric-bar.deep { background: var(--teal); }
+.metric-bar.rem { background: #6366f1; }
+.metric-bar.hr { background: var(--red); }
+.metric-bar.quality { background: var(--amber); }
+
+.metric-value {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem;
+  color: var(--white);
+  margin-top: 4px;
+}
+
+/* ===== 168 HOUR SYSTEM ===== */
+.system-section {
+  background: var(--bg-dark);
+  padding: 120px 5vw;
+}
+
+.system-section h2 {
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.system-section h2 span { color: var(--amber); }
+
+.planner-grid {
+  max-width: 900px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 80px repeat(5, 1fr);
+  gap: 4px;
+}
+
+.planner-header {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 0.9rem;
+  color: var(--gray);
+  text-align: center;
+  padding: 12px 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.time-label {
+  font-size: 0.7rem;
+  color: var(--gray);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 12px;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.planner-block {
+  padding: 10px 8px;
+  border-radius: 4px;
+  font-size: 0.65rem;
+  text-align: center;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+}
+
+.block-wake { background: rgba(245,166,35,0.15); color: var(--amber); border: 1px solid rgba(245,166,35,0.2); }
+.block-exercise { background: rgba(34,197,94,0.12); color: var(--green); border: 1px solid rgba(34,197,94,0.15); }
+.block-focus { background: rgba(245,166,35,0.2); color: var(--amber); border: 1px solid rgba(245,166,35,0.3); font-weight: 700; }
+.block-lunch { background: rgba(255,255,255,0.04); color: var(--gray); border: 1px solid rgba(255,255,255,0.06); }
+.block-meeting { background: rgba(99,102,241,0.15); color: #818cf8; border: 1px solid rgba(99,102,241,0.2); }
+.block-personal { background: rgba(13,148,136,0.15); color: var(--teal); border: 1px solid rgba(13,148,136,0.2); }
+.block-sleep { background: rgba(255,255,255,0.03); color: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.04); }
+.block-class { background: rgba(239,68,68,0.12); color: var(--red); border: 1px solid rgba(239,68,68,0.15); }
+.block-session { background: rgba(168,85,247,0.15); color: #a855f7; border: 1px solid rgba(168,85,247,0.2); }
+.block-dashboard { background: rgba(245,166,35,0.1); color: var(--amber); border: 1px solid rgba(245,166,35,0.15); }
+
+.planner-legend {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 30px;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.7rem;
+  color: var(--gray);
+}
+
+.legend-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+}
+
+.non-negotiable {
+  text-align: center;
+  margin-top: 40px;
+  padding: 20px;
+  border: 1px dashed rgba(245,166,35,0.3);
+  border-radius: 8px;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.non-negotiable p {
+  font-size: 0.9rem;
+  color: var(--amber);
+  font-weight: 600;
+}
+
+.non-negotiable span {
+  font-size: 0.75rem;
+  color: var(--gray);
+  display: block;
+  margin-top: 4px;
+}
+
+/* ===== AI ADVISOR ===== */
+.ai-section {
+  background: linear-gradient(180deg, var(--bg-section) 0%, var(--bg-dark) 100%);
+}
+
+.ai-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: start;
+}
+
+.ai-section h2 {
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  margin-bottom: 20px;
+}
+
+.ai-section h2 span { color: var(--teal); }
+
+.ai-prompt-box {
+  background: var(--bg-card);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 8px;
+  padding: 30px;
+  font-family: 'DM Sans', monospace;
+  position: relative;
+}
+
+.ai-prompt-box::before {
+  content: 'PROMPT';
+  position: absolute;
+  top: -10px;
+  left: 20px;
+  background: var(--bg-card);
+  padding: 0 8px;
+  font-size: 0.6rem;
+  color: var(--teal);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.ai-prompt-box p {
+  font-size: 0.85rem;
+  color: var(--gray);
+  line-height: 1.8;
+  margin-bottom: 12px;
+}
+
+.ai-prompt-box p strong {
+  color: var(--white);
+}
+
+.constraints-list {
+  list-style: none;
+  margin-top: 30px;
+}
+
+.constraints-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  font-size: 0.9rem;
+  color: var(--gray);
+}
+
+.constraints-list li::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--teal);
+  margin-top: 7px;
+  flex-shrink: 0;
+}
+
+/* ===== SCORECARD ===== */
+.scorecard-section {
+  background: var(--bg-dark);
+  text-align: center;
+}
+
+.scorecard-section h2 {
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  margin-bottom: 60px;
+}
+
+.scorecard-section h2 span { color: var(--amber); }
+
+.scorecard {
+  max-width: 700px;
+  margin: 0 auto;
+  background: var(--bg-card);
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.08);
+  overflow: hidden;
+}
+
+.scorecard-header {
+  display: grid;
+  grid-template-columns: 1fr 80px;
+  padding: 16px 24px;
+  background: rgba(245,166,35,0.1);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.scorecard-header span {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.1rem;
+  color: var(--amber);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.scorecard-header span:last-child {
+  text-align: center;
+}
+
+.score-row {
+  display: grid;
+  grid-template-columns: 1fr 80px;
+  padding: 14px 24px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  align-items: center;
+  text-align: left;
+  transition: background 0.2s;
+}
+
+.score-row:hover { background: rgba(255,255,255,0.02); }
+
+.score-row .task {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+}
+
+.score-row .check {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  border: 2px solid var(--green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  color: var(--green);
+  flex-shrink: 0;
+}
+
+.score-row .time {
+  font-size: 0.75rem;
+  color: var(--gray);
+  text-align: center;
+}
+
+.score-total {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  background: rgba(245,166,35,0.05);
+}
+
+.score-total .label {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.2rem;
+  color: var(--gray);
+}
+
+.score-total .value {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.5rem;
+  color: var(--amber);
+  text-shadow: 0 0 20px rgba(245,166,35,0.3);
+}
+
+.ipl-quote {
+  margin-top: 40px;
+  font-size: 1rem;
+  color: var(--gray);
+  font-style: italic;
+}
+
+/* ===== MEASURE SECTION (pinned) ===== */
+.measure-section {
+  background: var(--bg-section);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.measure-section h2 {
+  font-size: clamp(2rem, 5vw, 4rem);
+  max-width: 800px;
+  line-height: 1.2;
+}
+
+.measure-section h2 .line1 { color: var(--gray); display: block; }
+.measure-section h2 .line2 { color: var(--amber); display: block; font-size: 1.4em; margin: 16px 0; }
+.measure-section h2 .line3 { color: var(--teal); display: block; }
+.measure-section h2 .line4 { color: var(--white); display: block; margin-top: 16px; }
+
+/* ===== TAKEAWAYS ===== */
+.takeaways {
+  background: var(--bg-dark);
+}
+
+.takeaways h2 {
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  margin-bottom: 50px;
+}
+
+.takeaways h2 span { color: var(--amber); }
+
+.takeaway-list {
+  max-width: 700px;
+  counter-reset: takeaway;
+}
+
+.takeaway-item {
+  counter-increment: takeaway;
+  display: flex;
+  gap: 20px;
+  padding: 24px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  align-items: flex-start;
+}
+
+.takeaway-item::before {
+  content: counter(takeaway, decimal-leading-zero);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem;
+  color: var(--amber);
+  flex-shrink: 0;
+  width: 50px;
+  opacity: 0.6;
+}
+
+.takeaway-item p {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--gray);
+}
+
+.takeaway-item p strong {
+  color: var(--white);
+}
+
+/* ===== FOOTER ===== */
+footer {
+  padding: 60px 5vw;
+  text-align: center;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  background: var(--bg-dark);
+}
+
+.footer-quote {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  color: var(--gray);
+  margin-bottom: 30px;
+}
+
+.footer-quote span { color: var(--amber); }
+
+.footer-brand {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+}
+
+.footer-brand a {
+  color: rgba(255,255,255,0.4);
+  text-decoration: none;
+}
+
+.footer-attr {
+  margin-top: 10px;
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.2);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  section { padding: 80px 6vw; }
+
+  .sleep-content,
+  .ai-content,
+  .busy-explain {
+    grid-template-columns: 1fr;
+  }
+
+  .sre-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .planner-grid {
+    grid-template-columns: 60px repeat(5, 1fr);
+    font-size: 0.6rem;
+  }
+
+  .planner-block { min-height: 36px; font-size: 0.55rem; padding: 6px 4px; }
+
+  .stats-row { grid-template-columns: 1fr; gap: 30px; }
+
+  .sleep-metrics { grid-template-columns: 1fr; }
+
+  .rpa-comparison { flex-direction: column; align-items: flex-start; }
+
+  .interrupt-labels { flex-wrap: wrap; }
+}
+
+/* ===== ANIMATIONS ===== */
+.reveal { opacity: 0; transform: translateY(40px); }
+.reveal-left { opacity: 0; transform: translateX(-60px); }
+.reveal-right { opacity: 0; transform: translateX(60px); }
+.reveal-scale { opacity: 0; transform: scale(0.9); }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+<div class="grain"></div>
+
+<!-- HERO -->
+<section class="hero">
+  <p class="hero-pre reveal">Social Eagle AI Academy Workshop</p>
+  <h1 class="reveal">MASTER YOUR<span>168 HOURS</span></h1>
+  <div class="hero-counter reveal-scale">
+    <div class="number" id="heroCounter">0</div>
+    <div class="label">hours every week</div>
+  </div>
+  <p class="hero-subtitle reveal">Stop being busy. Start being focused.</p>
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="line"></div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-section">
+  <div class="marquee-track">
+    <span>Focus</span>
+    <span class="highlight">Measure</span>
+    <span>Execute</span>
+    <span class="highlight">Sleep</span>
+    <span>Deep Work</span>
+    <span class="highlight">RPA</span>
+    <span>Energy</span>
+    <span class="highlight">168 Hours</span>
+    <span>Focus</span>
+    <span class="highlight">Measure</span>
+    <span>Execute</span>
+    <span class="highlight">Sleep</span>
+    <span>Deep Work</span>
+    <span class="highlight">RPA</span>
+    <span>Energy</span>
+    <span class="highlight">168 Hours</span>
+  </div>
+</div>
+
+<!-- THE PROBLEM -->
+<section class="problem">
+  <div class="section-label reveal">001 / The Focus Crisis</div>
+  <h2 class="reveal">WE ARE <span>LOSING</span><br>THE BATTLE FOR FOCUS</h2>
+
+  <div class="stats-row">
+    <div class="stat-item reveal">
+      <div class="stat-number"><span class="counter" data-target="10">0</span><span class="stat-suffix"> min</span></div>
+      <div class="stat-label">Before losing focus</div>
+    </div>
+    <div class="stat-item reveal">
+      <div class="stat-number"><span class="counter" data-target="30">0</span><span class="stat-suffix">+ min</span></div>
+      <div class="stat-label">Lost per day to interruptions</div>
+    </div>
+    <div class="stat-item reveal">
+      <div class="stat-number"><span class="counter" data-target="3">0</span><span class="stat-suffix">%</span></div>
+      <div class="stat-label">Muscle mass lost per decade after 40</div>
+    </div>
+  </div>
+
+  <div class="interrupt-viz reveal-scale">
+    <div class="interrupt-bar">
+      <div class="segment focus" style="width:25%">Focus</div>
+      <div class="segment interrupt" style="width:8%"></div>
+      <div class="segment recovery" style="width:17%">Recovery</div>
+      <div class="segment focus" style="width:20%">Focus</div>
+      <div class="segment interrupt" style="width:8%"></div>
+      <div class="segment recovery" style="width:12%">Recovery</div>
+      <div class="segment focus" style="width:10%">Focus</div>
+    </div>
+    <div class="interrupt-labels">
+      <span><div class="dot" style="background:var(--teal)"></div>Deep Focus</span>
+      <span><div class="dot" style="background:var(--red)"></div>Interruption</span>
+      <span><div class="dot" style="background:rgba(245,166,35,0.6)"></div>Recovery (10 min)</span>
+    </div>
+  </div>
+
+  <div class="quote-block reveal-left">
+    <p>"Even ants are busy. What are you busy about?"</p>
+    <div class="author">Workshop Insight</div>
+  </div>
+</section>
+
+<!-- BUSY != PRODUCTIVE -->
+<section class="busy-section">
+  <div class="section-label reveal">002 / The Truth</div>
+  <div class="busy-equation">
+    <span class="word reveal-left">BUSY</span>
+    <span class="not-equal reveal-scale">&ne;</span>
+    <span class="word reveal-right">PRODUCTIVE</span>
+  </div>
+  <div class="busy-explain">
+    <div class="col bad reveal-left">
+      <h3>BUSY</h3>
+      <p>Occupied. Exhausted. Running on a treadmill. Doing 100 tasks. Feeling like you worked hard but with nothing to show for it.</p>
+    </div>
+    <div class="col good reveal-right">
+      <h3>PRODUCTIVE</h3>
+      <p>Working on result-providing activities. 10 critical tasks that move the needle. Maximum outcome with focused effort.</p>
+    </div>
+  </div>
+</section>
+
+<!-- RPA FRAMEWORK -->
+<section class="rpa-section">
+  <div class="section-label reveal">003 / The Framework</div>
+  <h2 class="reveal"><span>RPA:</span> RESULT<br>PROVIDING ACTIVITY</h2>
+  <p class="rpa-subtitle reveal">High leverage tasks that generate maximum outcomes. Do less, achieve more.</p>
+
+  <div class="rpa-comparison reveal">
+    <div class="rpa-vs">
+      <div class="rpa-num old">100</div>
+      <div>
+        <div class="rpa-desc">Random tasks</div>
+      </div>
+    </div>
+    <div class="rpa-arrow reveal-scale">&rarr;</div>
+    <div class="rpa-vs">
+      <div class="rpa-num new">10</div>
+      <div>
+        <div class="rpa-desc">Critical RPA tasks</div>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="font-size:1.5rem; margin-bottom:8px; color:var(--white);" class="reveal">The SRE Framework</h3>
+  <p style="color:var(--gray); margin-bottom:10px; font-size:0.9rem;" class="reveal">The foundation for sustained focus and energy</p>
+
+  <div class="sre-grid">
+    <div class="sre-item reveal">
+      <span class="sre-icon">&#x1F6CF;</span>
+      <h3>SLEEP</h3>
+      <p>Quality 8-hour sleep is the #1 priority. Everything else is built on this foundation.</p>
+    </div>
+    <div class="sre-item reveal">
+      <span class="sre-icon">&#x1F3CB;</span>
+      <h3>REST &amp; EXERCISE</h3>
+      <p>60 minutes daily. Running, gym, swimming. Recover properly. Don't over-strain.</p>
+    </div>
+    <div class="sre-item reveal">
+      <span class="sre-icon">&#x1F957;</span>
+      <h3>EAT</h3>
+      <p>Good food fuels good energy. Good energy enables sustained focus and peak performance.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SLEEP SECTION -->
+<section class="sleep-section">
+  <div class="section-label reveal" style="text-align:right;">004 / Sleep is Everything</div>
+  <h2 class="reveal">SLEEP IS YOUR<br><span>SUPERPOWER</span></h2>
+
+  <div class="sleep-content">
+    <div class="sleep-priority reveal-left">
+      <p style="color:var(--gray); margin-bottom:16px; font-size:0.9rem;">Priority order for peak performance:</p>
+      <div class="priority-item top">
+        <span class="priority-rank">#1</span>
+        <span class="priority-name">Sleep (8 hrs quality)</span>
+      </div>
+      <div class="priority-item">
+        <span class="priority-rank">#2</span>
+        <span class="priority-name">Exercise (60 min daily)</span>
+      </div>
+      <div class="priority-item">
+        <span class="priority-rank">#3</span>
+        <span class="priority-name">Nutrition</span>
+      </div>
+      <div class="priority-item">
+        <span class="priority-rank">#4</span>
+        <span class="priority-name">Deep Work</span>
+      </div>
+      <div class="priority-item">
+        <span class="priority-rank">#5</span>
+        <span class="priority-name">Everything Else</span>
+      </div>
+    </div>
+
+    <div class="sleep-metrics reveal-right">
+      <div class="metric-card">
+        <h4>Deep Sleep</h4>
+        <div class="metric-value">1.8<span class="stat-suffix" style="font-size:0.5em"> hrs</span></div>
+        <div class="metric-bar-container"><div class="metric-bar deep" data-width="75"></div></div>
+      </div>
+      <div class="metric-card">
+        <h4>REM Sleep</h4>
+        <div class="metric-value">2.1<span class="stat-suffix" style="font-size:0.5em"> hrs</span></div>
+        <div class="metric-bar-container"><div class="metric-bar rem" data-width="82"></div></div>
+      </div>
+      <div class="metric-card">
+        <h4>Resting Heart Rate</h4>
+        <div class="metric-value">62<span class="stat-suffix" style="font-size:0.5em"> bpm</span></div>
+        <div class="metric-bar-container"><div class="metric-bar hr" data-width="60"></div></div>
+      </div>
+      <div class="metric-card">
+        <h4>Sleep Quality</h4>
+        <div class="metric-value">87<span class="stat-suffix" style="font-size:0.5em"> %</span></div>
+        <div class="metric-bar-container"><div class="metric-bar quality" data-width="87"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 168 HOUR SYSTEM -->
+<section class="system-section">
+  <div class="section-label reveal" style="text-align:center;">005 / The System</div>
+  <h2 class="reveal">THE <span>168-HOUR</span><br>WEEKLY PLANNER</h2>
+
+  <div class="planner-grid reveal-scale">
+    <!-- Header -->
+    <div class="planner-header"></div>
+    <div class="planner-header">Mon</div>
+    <div class="planner-header">Tue</div>
+    <div class="planner-header">Wed</div>
+    <div class="planner-header">Thu</div>
+    <div class="planner-header">Fri</div>
+
+    <!-- 5 AM -->
+    <div class="time-label">5 AM</div>
+    <div class="planner-block block-class">Class</div>
+    <div class="planner-block block-wake">Wake</div>
+    <div class="planner-block block-wake">Wake</div>
+    <div class="planner-block block-wake">Wake</div>
+    <div class="planner-block block-wake">Wake</div>
+
+    <!-- 6-7 AM -->
+    <div class="time-label">6 AM</div>
+    <div class="planner-block block-exercise">Exercise</div>
+    <div class="planner-block block-exercise">Exercise</div>
+    <div class="planner-block block-exercise">Exercise</div>
+    <div class="planner-block block-exercise">Exercise</div>
+    <div class="planner-block block-exercise">Exercise</div>
+
+    <!-- 7-9 AM -->
+    <div class="time-label">7-9 AM</div>
+    <div class="planner-block block-focus">Deep Focus 1</div>
+    <div class="planner-block block-focus">Deep Focus 1</div>
+    <div class="planner-block block-focus">Deep Focus 1</div>
+    <div class="planner-block block-focus">Deep Focus 1</div>
+    <div class="planner-block block-focus">Deep Focus 1</div>
+
+    <!-- 9:30-1 PM -->
+    <div class="time-label">9:30-1</div>
+    <div class="planner-block block-dashboard">Dashboard</div>
+    <div class="planner-block block-focus">Deep Focus 2</div>
+    <div class="planner-block block-focus">Deep Focus 2</div>
+    <div class="planner-block block-focus">Deep Focus 2</div>
+    <div class="planner-block block-focus">Deep Focus 2</div>
+
+    <!-- 1-2 PM -->
+    <div class="time-label">1-2 PM</div>
+    <div class="planner-block block-lunch">Lunch</div>
+    <div class="planner-block block-lunch">Lunch</div>
+    <div class="planner-block block-lunch">Lunch</div>
+    <div class="planner-block block-lunch">Lunch</div>
+    <div class="planner-block block-lunch">Lunch</div>
+
+    <!-- 2-4 PM -->
+    <div class="time-label">2-4 PM</div>
+    <div class="planner-block block-meeting">Meetings</div>
+    <div class="planner-block block-focus">Deep Focus 3</div>
+    <div class="planner-block block-meeting">Meetings</div>
+    <div class="planner-block block-focus">Deep Focus 3</div>
+    <div class="planner-block block-meeting">Meetings</div>
+
+    <!-- 4-6 PM -->
+    <div class="time-label">4-6 PM</div>
+    <div class="planner-block block-focus">Deep Work</div>
+    <div class="planner-block block-focus">Deep Work</div>
+    <div class="planner-block block-focus">Deep Work</div>
+    <div class="planner-block block-focus">Deep Work</div>
+    <div class="planner-block block-focus">Deep Work</div>
+
+    <!-- 6-9 PM -->
+    <div class="time-label">6-9 PM</div>
+    <div class="planner-block block-personal">Personal</div>
+    <div class="planner-block block-personal">Personal</div>
+    <div class="planner-block block-session">Session</div>
+    <div class="planner-block block-personal">Personal</div>
+    <div class="planner-block block-personal">Personal</div>
+
+    <!-- 9-10 PM -->
+    <div class="time-label">9-10 PM</div>
+    <div class="planner-block block-personal">Wind Down</div>
+    <div class="planner-block block-personal">Wind Down</div>
+    <div class="planner-block block-personal">Wind Down</div>
+    <div class="planner-block block-personal">Wind Down</div>
+    <div class="planner-block block-personal">Wind Down</div>
+
+    <!-- 10 PM-5 AM -->
+    <div class="time-label">10-5 AM</div>
+    <div class="planner-block block-sleep">Sleep</div>
+    <div class="planner-block block-sleep">Sleep</div>
+    <div class="planner-block block-sleep">Sleep</div>
+    <div class="planner-block block-sleep">Sleep</div>
+    <div class="planner-block block-sleep">Sleep</div>
+  </div>
+
+  <div class="planner-legend">
+    <div class="legend-item"><div class="legend-dot" style="background:var(--amber)"></div>Deep Focus</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div>Exercise</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--teal)"></div>Personal</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#818cf8"></div>Meetings</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--red)"></div>Class</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#a855f7"></div>Session</div>
+    <div class="legend-item"><div class="legend-dot" style="background:rgba(255,255,255,0.15)"></div>Sleep</div>
+  </div>
+
+  <div class="non-negotiable reveal">
+    <p>No meetings during 9:30 AM - 1:00 PM. Non-negotiable.</p>
+    <span>Protect your deep focus zone at all costs.</span>
+  </div>
+</section>
+
+<!-- AI ADVISOR -->
+<section class="ai-section">
+  <div class="section-label reveal">006 / AI-Powered Planning</div>
+  <div class="ai-content">
+    <div>
+      <h2 class="reveal">YOUR AI<br><span>BRUTAL HONEST</span><br>ADVISOR</h2>
+      <ul class="constraints-list">
+        <li class="reveal">Fixed schedules: Monday 5 AM class, Wednesday 8-10 PM session</li>
+        <li class="reveal">Exercise daily: 60 minutes, non-negotiable</li>
+        <li class="reveal">Sleep 8 hours minimum without compromise</li>
+        <li class="reveal">4 hours learning: Mindset, Business, AI</li>
+        <li class="reveal">Check office dashboard: Sales &amp; Marketing</li>
+        <li class="reveal">5-minute daily documentation (Reiki + reflection)</li>
+        <li class="reveal">Practice gratitude daily</li>
+      </ul>
+    </div>
+    <div>
+      <div class="ai-prompt-box reveal-right">
+        <p><strong>From now on, stop being agreeable and act as a brutally honest advisor.</strong></p>
+        <p>Don't validate me. Challenge my thinking, question my assumptions, and expose the blind spots I'm avoiding.</p>
+        <p>Be direct, rational, and unfiltered.</p>
+        <p>If my reasoning is weak, tell on my face.</p>
+        <p>If I'm fooling myself, point it out.</p>
+        <p>If I'm avoiding something uncomfortable, share.</p>
+        <p><strong>Communicate where I lack. Hold nothing back!</strong></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCORECARD -->
+<section class="scorecard-section">
+  <div class="section-label reveal">007 / Track Everything</div>
+  <h2 class="reveal">THE DAILY<br><span>SCORECARD</span></h2>
+
+  <div class="scorecard reveal-scale">
+    <div class="scorecard-header">
+      <span>Wednesday - Activity Tracker</span>
+      <span>Status</span>
+    </div>
+    <div class="score-row">
+      <div class="task"><div class="check">&#10003;</div>5 AM Class Attended</div>
+      <div class="time">5:00 AM</div>
+    </div>
+    <div class="score-row">
+      <div class="task"><div class="check">&#10003;</div>Office Dashboard Checked</div>
+      <div class="time">9:00 AM</div>
+    </div>
+    <div class="score-row">
+      <div class="task"><div class="check">&#10003;</div>Deep Focus Block 1 Completed</div>
+      <div class="time">7-9 AM</div>
+    </div>
+    <div class="score-row">
+      <div class="task"><div class="check">&#10003;</div>Deep Focus Block 2 Completed</div>
+      <div class="time">9:30-1 PM</div>
+    </div>
+    <div class="score-row">
+      <div class="task"><div class="check">&#10003;</div>60 Minutes Exercise</div>
+      <div class="time">6:00 AM</div>
+    </div>
+    <div class="score-row">
+      <div class="task"><div class="check">&#10003;</div>5-Min Documentation Done</div>
+      <div class="time">9:30 PM</div>
+    </div>
+    <div class="score-row">
+      <div class="task"><div class="check">&#10003;</div>Sleep Quality Target Met</div>
+      <div class="time">10 PM</div>
+    </div>
+    <div class="score-total">
+      <div class="label">DAILY SCORE</div>
+      <div class="value" id="scoreValue">0</div>
+    </div>
+  </div>
+  <p class="ipl-quote reveal">"An IPL match without a scoreboard is nothing. Your life needs one too."</p>
+</section>
+
+<!-- MEASURE (PINNED) -->
+<section class="measure-section">
+  <h2>
+    <span class="line1 reveal">If you are not measuring,</span>
+    <span class="line2 reveal">you are not growing.</span>
+    <span class="line3 reveal">Anything that is measurable can be improved.</span>
+    <span class="line4 reveal">If it is a number, it will be measurable.<br>If it is measurable, it can be improved.</span>
+  </h2>
+</section>
+
+<!-- TAKEAWAYS -->
+<section class="takeaways">
+  <div class="section-label reveal">008 / Key Takeaways</div>
+  <h2 class="reveal">YOUR <span>ACTION</span><br>PLAN</h2>
+
+  <div class="takeaway-list">
+    <div class="takeaway-item reveal">
+      <p><strong>Prioritize sleep above everything.</strong> Quality 8-hour sleep is the foundation. You can't focus without it. You can't perform without it. Start here.</p>
+    </div>
+    <div class="takeaway-item reveal">
+      <p><strong>Block 2-3 deep work zones daily.</strong> No meetings, no interruptions, no phone. 9:30 AM to 1 PM is sacred. Protect it like your life depends on it.</p>
+    </div>
+    <div class="takeaway-item reveal">
+      <p><strong>Focus on RPA, not random tasks.</strong> 10 result-providing activities beat 100 busy-work tasks. Ask: "Does this move the needle?" If not, drop it.</p>
+    </div>
+    <div class="takeaway-item reveal">
+      <p><strong>Measure everything.</strong> Sleep, focus blocks, exercise, business metrics. Convert life into numbers. What gets measured gets improved.</p>
+    </div>
+    <div class="takeaway-item reveal">
+      <p><strong>Use the 168-hour weekly planner.</strong> Map your constraints first. Then fill in deep focus zones. Plan the week scientifically, not reactively.</p>
+    </div>
+    <div class="takeaway-item reveal">
+      <p><strong>Let AI challenge you, not validate you.</strong> Set up your AI as a brutal, honest advisor. Give it your constraints. Let it question your decisions.</p>
+    </div>
+    <div class="takeaway-item reveal">
+      <p><strong>Create your daily scorecard.</strong> Track completion. Score yourself. When you see the game, it becomes engaging. Like an IPL match with a live scoreboard.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-quote reveal">
+    <span>Focus</span> creates time. <span>Measurement</span> creates growth.
+  </div>
+  <div class="footer-brand">
+    Shaid | <a href="https://shaai.solutions">shaai.solutions</a>
+  </div>
+  <div class="footer-attr">
+    Session by Social Eagle AI Academy
+  </div>
+</footer>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+// Progress bar
+window.addEventListener('scroll', () => {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = (scrollTop / docHeight) * 100;
+  document.getElementById('progressBar').style.width = progress + '%';
+});
+
+// Reveal animations
+document.querySelectorAll('.reveal').forEach(el => {
+  gsap.to(el, {
+    opacity: 1, y: 0, duration: 0.8, ease: 'power2.out',
+    scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' }
+  });
+});
+
+document.querySelectorAll('.reveal-left').forEach(el => {
+  gsap.to(el, {
+    opacity: 1, x: 0, duration: 0.8, ease: 'power2.out',
+    scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' }
+  });
+});
+
+document.querySelectorAll('.reveal-right').forEach(el => {
+  gsap.to(el, {
+    opacity: 1, x: 0, duration: 0.8, ease: 'power2.out',
+    scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' }
+  });
+});
+
+document.querySelectorAll('.reveal-scale').forEach(el => {
+  gsap.to(el, {
+    opacity: 1, scale: 1, duration: 0.8, ease: 'power2.out',
+    scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' }
+  });
+});
+
+// Hero counter
+ScrollTrigger.create({
+  trigger: '.hero',
+  start: 'top center',
+  onEnter: () => {
+    gsap.to({ val: 0 }, {
+      val: 168, duration: 2, ease: 'power2.out',
+      onUpdate: function() { document.getElementById('heroCounter').textContent = Math.floor(this.targets()[0].val); }
+    });
+  },
+  once: true
+});
+
+// Stat counters
+document.querySelectorAll('.counter').forEach(counter => {
+  const target = parseInt(counter.dataset.target);
+  ScrollTrigger.create({
+    trigger: counter,
+    start: 'top 80%',
+    onEnter: () => {
+      gsap.to({ val: 0 }, {
+        val: target, duration: 1.5, ease: 'power2.out',
+        onUpdate: function() { counter.textContent = Math.floor(this.targets()[0].val); }
+      });
+    },
+    once: true
+  });
+});
+
+// Score counter
+ScrollTrigger.create({
+  trigger: '#scoreValue',
+  start: 'top 85%',
+  onEnter: () => {
+    gsap.to({ val: 0 }, {
+      val: 10.5, duration: 1.5, ease: 'power2.out',
+      onUpdate: function() { document.getElementById('scoreValue').textContent = this.targets()[0].val.toFixed(1); }
+    });
+  },
+  once: true
+});
+
+// Metric bars
+document.querySelectorAll('.metric-bar').forEach(bar => {
+  const width = bar.dataset.width;
+  ScrollTrigger.create({
+    trigger: bar,
+    start: 'top 85%',
+    onEnter: () => { bar.style.width = width + '%'; },
+    once: true
+  });
+});
+
+// Stagger takeaway items
+gsap.utils.toArray('.takeaway-item').forEach((item, i) => {
+  gsap.to(item, {
+    opacity: 1, y: 0, duration: 0.6, delay: i * 0.08, ease: 'power2.out',
+    scrollTrigger: { trigger: item, start: 'top 85%', toggleActions: 'play none none none' }
+  });
+});
+
+// Stagger score rows
+gsap.utils.toArray('.score-row').forEach((row, i) => {
+  gsap.from(row, {
+    opacity: 0, x: -20, duration: 0.4, delay: i * 0.1, ease: 'power2.out',
+    scrollTrigger: { trigger: '.scorecard', start: 'top 75%', toggleActions: 'play none none none' }
+  });
+});
+
+// Stagger constraints list
+gsap.utils.toArray('.constraints-list li').forEach((li, i) => {
+  gsap.to(li, {
+    opacity: 1, y: 0, duration: 0.5, delay: i * 0.08, ease: 'power2.out',
+    scrollTrigger: { trigger: li, start: 'top 85%', toggleActions: 'play none none none' }
+  });
+});
+
+// Pin the measure section briefly
+ScrollTrigger.create({
+  trigger: '.measure-section',
+  start: 'top top',
+  end: '+=50%',
+  pin: true,
+  pinSpacing: true
+});
+</script>
+</body>
+</html>
